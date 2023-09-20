@@ -3,9 +3,7 @@
     Created on : 20 sept 2023, 14:44:57
     Author     : Isaac Brenes
 --%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -160,29 +158,54 @@
             <br />
             <h2>Iniciar Sesión</h2>
             <br />
-            <form action="tu_servlet.jsp" method="post">
-                <select name="opcion" class="form-controlddl">
+            <form action="index.jsp" method="post">
+                <select id="opciones" name="opciones" class="form-controlddl" onchange="mostrarCampos()">
                     <option value="crear_cliente">Crear Cliente</option>
                     <option value="crear_sucursal">Crear Sucursal</option>
                     <option value="crear_suscripcion">Crear Suscripción</option>
                 </select>
-                <c:choose>
-                    <c:when test="${param.opcion == 'crear_cliente'}">
-                        <!-- Inputs para crear cliente -->
-                        <input type="text" name="nombre_cliente" placeholder="Nombre del cliente">
-                        <input type="text" name="direccion_cliente" placeholder="Dirección del cliente">
-                    </c:when>
-                    <c:when test="${param.opcion == 'crear_sucursal'}">
-                        <!-- Inputs para crear sucursal -->
-                        <input type="text" name="nombre_sucursal" placeholder="Nombre de la sucursal">
-                        <input type="text" name="ubicacion_sucursal" placeholder="Ubicación de la sucursal">
-                    </c:when>
-                    <c:when test="${param.opcion == 'crear_suscripcion'}">
-                        <!-- Inputs para crear suscripción -->
-                        <input type="text" name="tipo_suscripcion" placeholder="Tipo de suscripción">
-                        <input type="text" name="precio_suscripcion" placeholder="Precio de la suscripción">
-                    </c:when>
-                </c:choose>
+                 <div id="crearClienteCampos" style="display: block;">
+                    <!-- Campos de entrada para Crear Cliente -->
+                    <input type="text" name="clienteNombre" placeholder="Nombre del cliente">
+                    <input type="text" name="clienteApellido" placeholder="Apellido del cliente">
+                </div>
+
+                <div id="crearSucursalCampos" style="display: none;">
+                    <!-- Campos de entrada para Crear Sucursal -->
+                    <input type="text" name="sucursalNombre" placeholder="Nombre de la sucursal">
+                    <input type="text" name="sucursalDireccion" placeholder="Dirección de la sucursal">
+                </div>
+
+                <div id="crearSuscripcionCampos" style="display: none;">
+                    <!-- Campos de entrada para Crear Suscripción -->
+                    <input type="text" name="suscripcionNombre" placeholder="Nombre de la suscripción">
+                    <input type="text" name="suscripcionDuracion" placeholder="Duración de la suscripción">
+                </div>
+
+                <script>
+                    function mostrarCampos() {
+                        var seleccion = document.getElementById("opciones").value;
+
+                        // Ocultar todos los divs de campos
+                        // Mostrar el div de campos correspondiente a la opción seleccionada
+                        if (seleccion === "crearCliente") {
+                          document.getElementById("crearClienteCampos").style.display = "block";
+                          document.getElementById("crearSucursalCampos").style.display = "none";
+                        document.getElementById("crearSuscripcionCampos").style.display = "none";
+                        } else if (seleccion === "crearSucursal") {
+                          document.getElementById("crearClienteCampos").style.display = "none";
+                          document.getElementById("crearSucursalCampos").style.display = "block";
+                          document.getElementById("crearSuscripcionCampos").style.display = "none";
+                          
+                        } else if (seleccion === "crearSuscripcion") {
+                          document.getElementById("crearSuscripcionCampos").style.display = "block";
+                          document.getElementById("crearClienteCampos").style.display = "none";
+                          document.getElementById("crearSucursalCampos").style.display = "none";
+                        }
+                      }
+
+                    
+                </script> 
                 
 
                 <input type="submit" class="gradient-button" value="Enviar">
