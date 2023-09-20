@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,6 +87,19 @@
         .form-control {
             margin-bottom: 20px;
         }
+        .form-controlddl {
+            margin-bottom: 20px;
+            background-color: #1E2126; /* Tonalidad gris */
+            height: 48px;
+            width: 80%;
+            color: white; /* Color de fuente blanco */
+            border: none; /* Sin borde */
+            padding: 8px; /* Ajusta el espaciado según tus necesidades */
+            border-radius: 5px; /* Borde redondeado de 5 píxeles */
+            box-sizing: border-box;
+            border: 3px solid transparent;
+            font-size: 25px;
+        }
         .gradient-button {
         background-image: linear-gradient(to right, #FF4500 ,#FFA500); /* Cambié los colores a naranja */
         color: white; /* Cambia el color del texto si es necesario */
@@ -145,23 +160,32 @@
             <br />
             <h2>Iniciar Sesión</h2>
             <br />
-            <form action="main.jsp" method="post"> <!-- Reemplaza "TuServlet" con el nombre de tu servlet JSP -->
-                <div class="form-control">
-                    <input type="text" name="txt_email" class="form-control" placeholder="Email" />
-                </div>
-                <div class="form-control">
-                    <input type="password" name="txt_pass" class="form-control" placeholder="Contraseña" />
-                </div>
-                <div>
-                    <span class="error">
-                        <!-- Muestra mensajes de error aquí si es necesario -->
-                    </span>
-                </div>
-                <br />
-                <div class="button-container">
-                    <input type="submit" name="btn_Login" class="gradient-button" value="Iniciar Sesión" />
-                    
-                </div>
+            <form action="tu_servlet.jsp" method="post">
+                <select name="opcion" class="form-controlddl">
+                    <option value="crear_cliente">Crear Cliente</option>
+                    <option value="crear_sucursal">Crear Sucursal</option>
+                    <option value="crear_suscripcion">Crear Suscripción</option>
+                </select>
+                <c:choose>
+                    <c:when test="${param.opcion == 'crear_cliente'}">
+                        <!-- Inputs para crear cliente -->
+                        <input type="text" name="nombre_cliente" placeholder="Nombre del cliente">
+                        <input type="text" name="direccion_cliente" placeholder="Dirección del cliente">
+                    </c:when>
+                    <c:when test="${param.opcion == 'crear_sucursal'}">
+                        <!-- Inputs para crear sucursal -->
+                        <input type="text" name="nombre_sucursal" placeholder="Nombre de la sucursal">
+                        <input type="text" name="ubicacion_sucursal" placeholder="Ubicación de la sucursal">
+                    </c:when>
+                    <c:when test="${param.opcion == 'crear_suscripcion'}">
+                        <!-- Inputs para crear suscripción -->
+                        <input type="text" name="tipo_suscripcion" placeholder="Tipo de suscripción">
+                        <input type="text" name="precio_suscripcion" placeholder="Precio de la suscripción">
+                    </c:when>
+                </c:choose>
+                
+
+                <input type="submit" class="gradient-button" value="Enviar">
             </form>
         </div>
         
